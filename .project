@@ -56,6 +56,11 @@
 			<locationURI>PARENT-1-PROJECT_LOC/inc/SlidePot.cpp</locationURI>
 		</link>
 		<link>
+			<name>I2C.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/inc/I2C.cpp</locationURI>
+		</link>
+		<link>
 			<name>TExaS.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/inc/TExaS.cpp</locationURI>

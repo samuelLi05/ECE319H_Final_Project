@@ -24,6 +24,7 @@
 extern "C" void __disable_irq(void);
 extern "C" void __enable_irq(void);
 extern "C" void TIMG12_IRQHandler(void);
+
 // ****note to ECE319K students****
 // the data sheet says the ADC does not work when clock is 80 MHz
 // however, the ADC seems to work on my boards at 80 MHz
@@ -45,17 +46,22 @@ uint32_t Random(uint32_t n){
 SlidePot Sensor(1500,0); // copy calibration from Lab 7
 
 // games  engine runs at 30Hz
-void TIMG12_IRQHandler(void){uint32_t pos,msg;
+// sensor input at a specific frequency
+uint32_t slide_pot_data;
+int16_t gyro_x, gyro_y, gyro_z; // global ram data variables 
+uint32_t Time = 0;
+uint32_t Data;
+void TIMG12_IRQHandler(void){
   if((TIMG12->CPU_INT.IIDX) == 1){ // this will acknowledge
     GPIOB->DOUTTGL31_0 = GREEN; // toggle PB27 (minimally intrusive debugging)
     GPIOB->DOUTTGL31_0 = GREEN; // toggle PB27 (minimally intrusive debugging)
-// game engine goes here
-    // 1) sample slide pot
-    // 2) read input switches
-    // 3) move sprites
-    // 4) start sounds
-    // 5) set semaphore
-    // NO LCD OUTPUT IN INTERRUPT SERVICE ROUTINES
+    Time++;
+    // sample
+    slide_pot_data = Sensor.In();
+    Sensor.Save(Data);
+    adxl345_read_accel(&gyro_x, &gyro_y, &gyro_z); // using the slidepot semaphor for timer interrupts at slower frequency
+    // store data into mailbox
+    // set the semaphore
     GPIOB->DOUTTGL31_0 = GREEN; // toggle PB27 (minimally intrusive debugging)
   }
 }
@@ -84,7 +90,7 @@ const char *Phrases[3][4]={
   {Language_English,Language_Spanish,Language_Portuguese,Language_French}
 };
 // use main1 to observe special characters
-int main(void){ // main1
+int main1(void){ // main1
     char l;
   __disable_irq();
   PLL_Init(); // set bus speed
@@ -155,33 +161,22 @@ int main2(void){ // main2
   }
 }
 
-// sensor input at a specific frequency
-uint32_t slide_pot_data;
-int16_t gyro_x, gyro_y, gyro_z; // global ram data variables 
-void TIMG12_IRQHandler(void){
-  if((TIMG12->CPU_INT.IIDX) == 1){ // this will acknowledge
-    GPIOB->DOUTTGL31_0 = GREEN; // toggle PB27 (minimally intrusive debugging)
-    GPIOB->DOUTTGL31_0 = GREEN; // toggle PB27 (minimally intrusive debugging)
-    Time++;
-    // sample
-    slide_pot_data = Sensor.In();
-    Sensor.Save(Data);
-    adxl345_read_accel(&gyro_x, &gyro_y, &gyro_z); // using the slidepot semaphor for timer interrupts at slower frequency
-    // store data into mailbox
-    // set the semaphore
-    GPIOB->DOUTTGL31_0 = GREEN; // toggle PB27 (minimally intrusive debugging)
-  }
-}
+#define left_LED (1<<17)
+#define middle_LED (1<<16)
+#define right_LED (1<<15)
 
 // use main3 to test switches and LEDs
-int main3(void){ // main3
+int main(void){ // main3
   __disable_irq();
   PLL_Init(); // set bus speed
   LaunchPad_Init();
   Switch_Init(); // initialize switches
   LED_Init(); // initialize LED
+  uint32_t switches;
   while(1){
     // write code to test switches and LEDs
+    switches = Switch_In();
+    LED_On(0x7);
 
   }
 }

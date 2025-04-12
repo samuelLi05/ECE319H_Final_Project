@@ -19,17 +19,18 @@ void LED_Init(void){
     //   bit 16 is pull down control
     //   bit 7 is PC peripheral connected, enable transparent data flow
     //   bit 0 selects GPIO function
-      IOMUX->SECCFG.PINCM[PA26INDEX] = (uint32_t) 0x00000081;
-      IOMUX->SECCFG.PINCM[PA25INDEX] = (uint32_t) 0x00000081;
-      IOMUX->SECCFG.PINCM[PA24INDEX] = (uint32_t) 0x00000081;
+      IOMUX->SECCFG.PINCM[PA15INDEX] = (uint32_t) 0x00000081; // right
+      IOMUX->SECCFG.PINCM[PA16INDEX] = (uint32_t) 0x00000081; //middle
+      IOMUX->SECCFG.PINCM[PA17INDEX] = (uint32_t) 0x00000081; // left
     // DOE31_0 Data output enable
-      GPIOA->DOE31_0 |= (1<<26)|(1<<25)|(1<<24);
-      GPIOA->DOUTCLR31_0 = (1<<26)|(1<<25)|(1<<24); // LED1 off
+      GPIOA->DOE31_0 |= (1<<17)|(1<<16)|(1<<15);
+      GPIOA->DOUTCLR31_0 = (1<<17)|(1<<16)|(1<<15); // LED1 off
 }
 // data specifies which LED to turn on
 void LED_On(uint32_t data){
     // write this
     // use DOUTSET31_0 register so it does not interfere with other GPIO
+  data =  data << 15;
   GPIOA->DOUTSET31_0 = data;
 }
 
@@ -37,6 +38,7 @@ void LED_On(uint32_t data){
 void LED_Off(uint32_t data){
     // write this
     // use DOUTCLR31_0 register so it does not interfere with other GPIO
+  data = data << 15;
   GPIOA->DOUTCLR31_0 = data;
 }
 
@@ -44,5 +46,6 @@ void LED_Off(uint32_t data){
 void LED_Toggle(uint32_t data){
     // write this
     // use DOUTTGL31_0 register so it does not interfere with other GPIO
+  data = data << 15;
   GPIOA->DOUTTGL31_0 = data;
 }

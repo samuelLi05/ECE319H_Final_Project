@@ -8,6 +8,7 @@ SHELL = cmd.exe
 CPP_SRCS += \
 C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/Clock.cpp \
 C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/DAC5.cpp \
+C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/I2C.cpp \
 ../LED.cpp \
 ../Lab9HMain.cpp \
 C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/LaunchPad.cpp \
@@ -26,6 +27,7 @@ CMD_SRCS += \
 OBJS += \
 ./Clock.o \
 ./DAC5.o \
+./I2C.o \
 ./LED.o \
 ./Lab9HMain.o \
 ./LaunchPad.o \
@@ -41,6 +43,7 @@ OBJS += \
 CPP_DEPS += \
 ./Clock.d \
 ./DAC5.d \
+./I2C.d \
 ./LED.d \
 ./Lab9HMain.d \
 ./LaunchPad.d \
@@ -56,6 +59,7 @@ CPP_DEPS += \
 OBJS__QUOTED += \
 "Clock.o" \
 "DAC5.o" \
+"I2C.o" \
 "LED.o" \
 "Lab9HMain.o" \
 "LaunchPad.o" \
@@ -71,6 +75,7 @@ OBJS__QUOTED += \
 CPP_DEPS__QUOTED += \
 "Clock.d" \
 "DAC5.d" \
+"I2C.d" \
 "LED.d" \
 "Lab9HMain.d" \
 "LaunchPad.d" \
@@ -86,6 +91,7 @@ CPP_DEPS__QUOTED += \
 CPP_SRCS__QUOTED += \
 "C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/Clock.cpp" \
 "C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/DAC5.cpp" \
+"C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/I2C.cpp" \
 "../LED.cpp" \
 "../Lab9HMain.cpp" \
 "C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/LaunchPad.cpp" \
