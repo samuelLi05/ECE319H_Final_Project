@@ -12,14 +12,17 @@ C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/I2C.cpp \
 ../LED.cpp \
 ../Lab9HMain.cpp \
 C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/LaunchPad.cpp \
+../Player.cpp \
 C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/SPI.cpp \
 C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/ST7735.cpp \
 C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/SlidePot.cpp \
 ../SmallFont.cpp \
 ../Sound.cpp \
+../Stars.cpp \
 ../Switch.cpp \
 C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/TExaS.cpp \
-C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/Timer.cpp 
+C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/Timer.cpp \
+../bounding_box.cpp 
 
 CMD_SRCS += \
 ../mspm0g3507.cmd 
@@ -31,14 +34,17 @@ OBJS += \
 ./LED.o \
 ./Lab9HMain.o \
 ./LaunchPad.o \
+./Player.o \
 ./SPI.o \
 ./ST7735.o \
 ./SlidePot.o \
 ./SmallFont.o \
 ./Sound.o \
+./Stars.o \
 ./Switch.o \
 ./TExaS.o \
-./Timer.o 
+./Timer.o \
+./bounding_box.o 
 
 CPP_DEPS += \
 ./Clock.d \
@@ -47,14 +53,17 @@ CPP_DEPS += \
 ./LED.d \
 ./Lab9HMain.d \
 ./LaunchPad.d \
+./Player.d \
 ./SPI.d \
 ./ST7735.d \
 ./SlidePot.d \
 ./SmallFont.d \
 ./Sound.d \
+./Stars.d \
 ./Switch.d \
 ./TExaS.d \
-./Timer.d 
+./Timer.d \
+./bounding_box.d 
 
 OBJS__QUOTED += \
 "Clock.o" \
@@ -63,14 +72,17 @@ OBJS__QUOTED += \
 "LED.o" \
 "Lab9HMain.o" \
 "LaunchPad.o" \
+"Player.o" \
 "SPI.o" \
 "ST7735.o" \
 "SlidePot.o" \
 "SmallFont.o" \
 "Sound.o" \
+"Stars.o" \
 "Switch.o" \
 "TExaS.o" \
-"Timer.o" 
+"Timer.o" \
+"bounding_box.o" 
 
 CPP_DEPS__QUOTED += \
 "Clock.d" \
@@ -79,14 +91,17 @@ CPP_DEPS__QUOTED += \
 "LED.d" \
 "Lab9HMain.d" \
 "LaunchPad.d" \
+"Player.d" \
 "SPI.d" \
 "ST7735.d" \
 "SlidePot.d" \
 "SmallFont.d" \
 "Sound.d" \
+"Stars.d" \
 "Switch.d" \
 "TExaS.d" \
-"Timer.d" 
+"Timer.d" \
+"bounding_box.d" 
 
 CPP_SRCS__QUOTED += \
 "C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/Clock.cpp" \
@@ -95,13 +110,16 @@ CPP_SRCS__QUOTED += \
 "../LED.cpp" \
 "../Lab9HMain.cpp" \
 "C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/LaunchPad.cpp" \
+"../Player.cpp" \
 "C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/SPI.cpp" \
 "C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/ST7735.cpp" \
 "C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/SlidePot.cpp" \
 "../SmallFont.cpp" \
 "../Sound.cpp" \
+"../Stars.cpp" \
 "../Switch.cpp" \
 "C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/TExaS.cpp" \
-"C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/Timer.cpp" 
+"C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/Timer.cpp" \
+"../bounding_box.cpp" 
 
 
