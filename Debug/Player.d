@@ -32,7 +32,7 @@ Player.o: ../Player.cpp ../Player.h \
  C:/ti/mspm0_sdk_2_03_00_07/source/ti/devices/msp/peripherals/m0p/hw_sysctl.h \
  C:/ti/mspm0_sdk_2_03_00_07/source/ti/devices/msp/peripherals/m0p/sysctl/hw_sysctl_mspm0g1x0x_g3x0x.h \
  ../../inc/LaunchPad.h ../images/images.h ../../inc/ST7735.h \
- ../bounding_box.h
+ ../bounding_box.h ../projectile.h
 ../Player.h:
 C:/ti/mspm0_sdk_2_03_00_07/source/ti/devices/msp/msp.h:
 C:/ti/mspm0_sdk_2_03_00_07/source/ti/devices/DeviceFamily.h:
@@ -68,3 +68,4 @@ C:/ti/mspm0_sdk_2_03_00_07/source/ti/devices/msp/peripherals/m0p/sysctl/hw_sysct
 ../images/images.h:
 ../../inc/ST7735.h:
 ../bounding_box.h:
+../projectile.h:

@@ -25,9 +25,12 @@
 #include "Stars.h"
 #include "bounding_box.h"
 #include "Player.h"
+#include "../inc/EdgeTriggered.h"
+
 extern "C" void __disable_irq(void);
 extern "C" void __enable_irq(void);
 extern "C" void TIMG12_IRQHandler(void);
+extern "C" void GROUP1_IRQHandler(void);
 
 // ****note to ECE319K students****
 // the data sheet says the ADC does not work when clock is 80 MHz
@@ -49,6 +52,12 @@ uint32_t Random(uint32_t n){
 
 SlidePot Sensor(1500,0); // copy calibration from Lab 7
 Player p1; // default player in starting position
+
+// button requests
+bool weapon1 = false;
+bool weapon2 = false;
+bool turbo1 = false;
+bool turbo2 = false;
 
 uint8_t TExaS_LaunchPadLogicPB27PB26(void){
   return (0x80|((GPIOB->DOUT31_0>>26)&0x03));
@@ -145,46 +154,46 @@ int main2(void){ // main2
   while(1){
   }
 }
+// testing why no work bruhhhhhhhhhhhhhhh. Working edge triggered interrupts and switches. 
 
-void EdgeTriggered_Init(void){
-  // PB21 is input with internal pull up resistor. Will need to initialize as gpio
-  GPIOA->POLARITY31_16 = 0x550000;  // we are setting on rising edge
-  GPIOA->CPU_INT.ICLR = (1<<24) | (1<<25) | (1<<26) | (1<<27);   // Bits 27:24
-  GPIOA->CPU_INT.IMASK = (1<<24) | (1<<25) | (1<<26) | (1<<27); // arm the interrupt
-  NVIC->IP[0] = (NVIC->IP[0]&(~0x0000FF00))|2<<6;    // set priority (bits 15,14) IRQ 1
-  NVIC->ISER[0] = 1 << 0; // Group0 interrupt vector
-  GPIOA->CPU_INT.ICLR = (1<<24) | (1<<25) | (1<<26) | (1<<27);
-}
-
-// use main3 to test switches and LEDs
-int main(void){ // main3
+uint32_t Count1, Count2, Count3, Count4;
+int main_edge(void){
   __disable_irq();
-  PLL_Init(); // set bus speed
   LaunchPad_Init();
-  Switch_Init(); // initialize switches
-  LED_Init(); // initialize LED
+  PLL_Init();
+  Switch_Init();
+  LED_Init();
   EdgeTriggered_Init();
+  Count1=0; Count2 =0;Count3=0;Count4=0;
   __enable_irq();
-  uint32_t switches;
   while(1){
-    // write code to test switches and LEDs
-    switches = Switch_In();
-    LED_On(0x3);
-
+    GPIOB->DOUTTGL31_0 = GREEN; // toggle PB27
   }
 }
 
-uint32_t Count; // Group0 for GPIOA interrupts 
-void GROUP0_IRQHandler(void){
+void GROUP1_IRQHandler(void){
   uint32_t stat;
-  Count++;
-  // while((stat = GPIOA->CPU_INT.IIDX)!=0){
-  //   if(stat == 25 || stat == 26 || stat == 27 || stat == 28){ // PB21
-  //     Count++; // number of touches
-      //GPIOB->DOUTTGL31_0 = RED; // toggle PB26
-    //}
-  //}
+  while((stat = GPIOA->CPU_INT.IIDX)!=0){
+    if(stat == 25){ // PB21
+      weapon1 = !weapon1; // number of touches
+      GPIOB->DOUTTGL31_0 = RED; // toggle PB26, // set flags for the game. Delays based on. Set toggles
+    } else if (stat == 26)
+    {
+      turbo2=!turbo2;
+      GPIOB->DOUTTGL31_0 = RED;
+    } else if (stat == 27)
+    {
+      turbo1 = !turbo1;
+      GPIOB->DOUTTGL31_0 = RED;
+    } else if (stat == 28)
+    {
+      weapon2 = !weapon2;
+      GPIOB->DOUTTGL31_0 = RED;
+    }
+  }
 }
+
+
 
 // games  engine runs at 30Hz
 // sensor input at a specific frequency
@@ -206,7 +215,7 @@ void TIMG12_IRQHandler(void){
   }
 }
 
-int main_game(void)
+int main(void)
 {
   // player movement
   __disable_irq();
@@ -225,7 +234,11 @@ int main_game(void)
   I2C_ADXL345_Init(0x53);
     // initialize interrupts on TimerG12 at 30 Hz
     TimerG12_Init();
-    TimerG12_IntArm(2666666, 2);
+    TimerG12_IntArm(2666666, 4);
+
+     Switch_Init();
+    LED_Init();
+    EdgeTriggered_Init();
 
   Time = 0;
   __enable_irq();
@@ -247,11 +260,14 @@ int main_game(void)
     // display distance in top row OutFix
     drawStars();
     updateStars();
+    p1.recieveButton(turbo1, turbo2, weapon1, weapon2);
     p1.gyro_controls(gyro_x, gyro_y);
     p1.draw_player();
     uint32_t Position = Sensor.Convert(slide_pot_data);
     p1.update_cursor(Position);
     p1.draw_cursor();
+    p1.shoot();
+    p1.radial();
 
     // slide_pot cursor controls
 
@@ -259,8 +275,14 @@ int main_game(void)
     // obstacles enemies
 
 
-
-
+    // Green means go lolll
+    if (turbo1 && !turbo2) LED_Toggle(0x02);
+    else if (!turbo1 && turbo2) LED_On(0x02);
+    else LED_Off(0x02);
+    // Radial would mean full on yellow. Can't do both so you have to turn on and off
+    if (weapon1 && !weapon2) LED_Toggle(0x01);
+    else if (!weapon1 && weapon2) LED_On(0x01);
+    else LED_Off(0x01);
     Time++;
     GPIOB->DOUTTGL31_0 = RED; // toggle PB26 (minimally intrusive debugging)
   }
@@ -285,8 +307,8 @@ int main_sensor(void)
   ST7735_PlotClear(0,2000);
   I2C_ADXL345_Init(0x53);
     // initialize interrupts on TimerG12 at 30 Hz
-    TimerG12_Init();
-    TimerG12_IntArm(2666666, 2);
+  TimerG12_Init();
+  TimerG12_IntArm(2666666, 2);
 
   Time = 0;
   __enable_irq();
@@ -361,7 +383,7 @@ int main5(void){ // final main
   while(1){
     // wait for semaphore
        // clear semaphore
-       // update ST7735R
+       // update ST7735R+
     // check for end game or level switch
   }
 }

@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "bounding_box.h"
 #include "images/images.h"
+#include "projectile.h"
 #include <cstdint>
 
 
@@ -24,28 +25,42 @@ void Player::gyro_controls(int gyro_x, int gyro_y)
     if (x < 0) x = 0;
     if (x > 103) x = 103;
 
+    // enable y movement with turbo button, y controls should mainly change obstacle speed. Player controls. Use gyro for opponent speeds
     if (gyro_y > 240) vy = 1;
     else if (gyro_y <= 240 && gyro_y > 180) vy = 0;
     else if (gyro_y <= 180) vy= -1;
-    else gyro_y = 0;
+    else vy = 0;
+
+    //measure score here TODO LOLLLL. THIS IS IMPORTANT. Dependent on y velocity which controls enemy speeds and turbo.
+    // use to acess distance that is travled by the user
 
     // adjust y movement frequency
-    freq_count++;
-    if (freq_count % 1 == 0)
+    uint8_t mod_amt = 0;
+    if (turbo1 ^ turbo2)
     {
-        y += vy;
-    if (y > 160) y = 160;
-    if (y < 50) y = 50;
+        if (turbo1) mod_amt =2;
+        else if (turbo2) mod_amt = 1;
+        freq_count++;
+        if (freq_count % mod_amt == 0)
+        {
+            if (!radial_happening) y += vy;
+            if (y > 160) y = 160;
+            if (y < 50) y = 50;
+        }
     }
-}
-void Player::weapon_switch(int)
-{
 
+    b1[0] = bounding_box(x + 2, y -8 , 23, 5); // back
+    b1[1] = bounding_box(x + 10, y -19, 7, 12); // center
+    b1[2] = bounding_box(x + 14, y -25 , 3, 5); // nose
 }
+
 
 void Player::draw_player()
 {
-    ST7735_DrawBitmap(x, y, sprite, w, h);
+    if (!radial_happening)
+    {
+        ST7735_DrawBitmap(x, y, sprite, w, h);
+    }
 }
 // gloabls to be used for slide_pot data tansformation
 const int32_t  in_min = 142;
@@ -72,7 +87,71 @@ void Player::update_cursor(int value)
     }
 
     aim_x = cursor_position + 2;
-    aim_y = cursor_y + 2;
+    aim_y = cursor_y - 2;
+}
+
+void Player::shoot()
+{ 
+    // only allowing a single projectile at a time. This or could use game clock timer
+    if (weapon1 && !weapon2)
+    {
+        if (w1 == NULL)
+        {
+            w1 = new projectile(x+13, y - 27, aim_x, aim_y, 4, true);
+        }
+    }
+    if (w1 != NULL)
+    {
+        w1->update_position();
+        if (w1->end)
+        {
+            delete w1;
+            w1 = NULL;
+        }
+    }
+}
+
+// array of possible positions. 2 asteroids and two aliens.  can spawn in these locations. randomize location and number of insertions made
+
+void Player::radial()
+{
+    // draw the radial animation. will need frequency counter 
+    if (!weapon1 && weapon2)
+    {
+        if (radial_counter < 15 && radial_counter >= 0)
+        {
+            // display the first sprite
+            radial_happening = true;
+            ST7735_DrawBitmap(x-7, y + 7, smallRadialWeapon, 43, 37);
+        } else if (radial_counter >= 15 && radial_counter < 30)
+        {
+            // display the second sprite
+            radial_happening = true;
+            ST7735_DrawBitmap(x-7, y+7, medRadialWeapon, 43, 37);
+        }
+        else if (radial_counter >= 30 and radial_counter < 45)
+        {
+            // display the third sprite
+            radial_happening = true;
+            ST7735_DrawBitmap(x-7, y +7, largeRadialWeapon, 43, 37);
+        } else if (radial_counter >= 45) {
+            radial_counter = -60; // 2 second delay to not abuse this weapon. Collision checking here with temporary sprite???
+            ST7735_DrawBitmap(x-7, y+ 7, radial_clear, 43, 37);
+            radial_happening = false;
+        }
+        radial_counter++;
+        // if a weapon start has not specified, start here 
+    } else if (radial_counter > 0)
+    {
+        ST7735_DrawBitmap(x-7, y+10, radial_clear, 43, 37); //  clear the spot
+        radial_counter = -120;
+        radial_happening = false;
+    } else
+    {
+        radial_happening = false;
+    }
+    
+
 }
 
 void Player::draw_cursor()
@@ -80,6 +159,14 @@ void Player::draw_cursor()
     ST7735_DrawBitmap(prev_cursor_position, cursor_y,aim_black, 5, 5);
     ST7735_DrawBitmap(cursor_position, cursor_y, aim_cursor, 5, 5);
     prev_cursor_position = cursor_position;
+}
+
+void Player::recieveButton(bool t1, bool t2, bool w1, bool w2)
+{
+    turbo1 = t1;
+    turbo2 = t2;
+    weapon1 = w1;
+    weapon2 = w2;
 }
 Player::Player()
 {
@@ -100,8 +187,21 @@ Player::Player()
     weapon_select =0;
     freq_count = 0;
     freq_mod = 2;
-    b1[0] = bounding_box(x + 2, y + 3, 23, 5); // back
-    b1[1] = bounding_box(x + 10, y + 8, 7, 12); // center
-    b1[2] = bounding_box(x + 14, y + 20, 3, 5); // nose
+    // b1[0] = bounding_box(x + 2, y + 3, 23, 5); // back
+    // b1[1] = bounding_box(x + 10, y + 8, 7, 12); // center
+    // b1[2] = bounding_box(x + 14, y + 20, 3, 5); // nose
+    b1[0] = bounding_box(x + 2, y -8 , 23, 5); // back
+    b1[1] = bounding_box(x + 10, y -19, 7, 12); // center
+    b1[2] = bounding_box(x + 14, y -25 , 3, 5); // nose
     prev_cursor_position = 0;
+    score = 0; // update the score basedon the time of the game. Have time counter based on number on velocity and frequency. 
+    // Eclipse this thershold before a certain number of sensor readings at 30 HZ. 
+
+    turbo1 = false;
+    turbo2= false;
+    weapon1 = false;
+    weapon2 = false;
+    w1 = NULL;
+    radial_counter = 0;
+    radial_happening = false;
 }

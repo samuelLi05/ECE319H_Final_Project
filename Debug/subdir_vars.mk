@@ -8,6 +8,7 @@ SHELL = cmd.exe
 CPP_SRCS += \
 C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/Clock.cpp \
 C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/DAC5.cpp \
+../EdgeTriggeredInt.cpp \
 C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/I2C.cpp \
 ../LED.cpp \
 ../Lab9HMain.cpp \
@@ -22,7 +23,11 @@ C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/SlidePot.cpp \
 ../Switch.cpp \
 C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/TExaS.cpp \
 C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/Timer.cpp \
-../bounding_box.cpp 
+../aliens.cpp \
+../asteroids.cpp \
+../bounding_box.cpp \
+../enemy_spawner.cpp \
+../projectile.cpp 
 
 CMD_SRCS += \
 ../mspm0g3507.cmd 
@@ -30,6 +35,7 @@ CMD_SRCS += \
 OBJS += \
 ./Clock.o \
 ./DAC5.o \
+./EdgeTriggeredInt.o \
 ./I2C.o \
 ./LED.o \
 ./Lab9HMain.o \
@@ -44,11 +50,16 @@ OBJS += \
 ./Switch.o \
 ./TExaS.o \
 ./Timer.o \
-./bounding_box.o 
+./aliens.o \
+./asteroids.o \
+./bounding_box.o \
+./enemy_spawner.o \
+./projectile.o 
 
 CPP_DEPS += \
 ./Clock.d \
 ./DAC5.d \
+./EdgeTriggeredInt.d \
 ./I2C.d \
 ./LED.d \
 ./Lab9HMain.d \
@@ -63,11 +74,16 @@ CPP_DEPS += \
 ./Switch.d \
 ./TExaS.d \
 ./Timer.d \
-./bounding_box.d 
+./aliens.d \
+./asteroids.d \
+./bounding_box.d \
+./enemy_spawner.d \
+./projectile.d 
 
 OBJS__QUOTED += \
 "Clock.o" \
 "DAC5.o" \
+"EdgeTriggeredInt.o" \
 "I2C.o" \
 "LED.o" \
 "Lab9HMain.o" \
@@ -82,11 +98,16 @@ OBJS__QUOTED += \
 "Switch.o" \
 "TExaS.o" \
 "Timer.o" \
-"bounding_box.o" 
+"aliens.o" \
+"asteroids.o" \
+"bounding_box.o" \
+"enemy_spawner.o" \
+"projectile.o" 
 
 CPP_DEPS__QUOTED += \
 "Clock.d" \
 "DAC5.d" \
+"EdgeTriggeredInt.d" \
 "I2C.d" \
 "LED.d" \
 "Lab9HMain.d" \
@@ -101,11 +122,16 @@ CPP_DEPS__QUOTED += \
 "Switch.d" \
 "TExaS.d" \
 "Timer.d" \
-"bounding_box.d" 
+"aliens.d" \
+"asteroids.d" \
+"bounding_box.d" \
+"enemy_spawner.d" \
+"projectile.d" 
 
 CPP_SRCS__QUOTED += \
 "C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/Clock.cpp" \
 "C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/DAC5.cpp" \
+"../EdgeTriggeredInt.cpp" \
 "C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/I2C.cpp" \
 "../LED.cpp" \
 "../Lab9HMain.cpp" \
@@ -120,6 +146,10 @@ CPP_SRCS__QUOTED += \
 "../Switch.cpp" \
 "C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/TExaS.cpp" \
 "C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/Timer.cpp" \
-"../bounding_box.cpp" 
+"../aliens.cpp" \
+"../asteroids.cpp" \
+"../bounding_box.cpp" \
+"../enemy_spawner.cpp" \
+"../projectile.cpp" 
 
 
