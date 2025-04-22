@@ -217,6 +217,11 @@ void TIMG12_IRQHandler(void){
 
 int main(void)
 {
+  DAC5_Init();
+  Clock_Init80MHz();
+  SysTick_IntArm(7256,1,0);
+  static uint32_t index = 0;
+
   // player movement
   __disable_irq();
   PLL_Init(); // set bus speed
@@ -276,8 +281,14 @@ int main(void)
 
 
     // Green means go lolll
-    if (turbo1 && !turbo2) LED_Toggle(0x02);
-    else if (!turbo1 && turbo2) LED_On(0x02);
+    if (turbo1 && !turbo2){
+      LED_Toggle(0x02);
+      soundPlayShoot(); // Play shooting sound
+    }
+    else if (!turbo1 && turbo2){
+      LED_On(0x02);
+      soundPlayRadial(); // Play radial sound
+    }
     else LED_Off(0x02);
     // Radial would mean full on yellow. Can't do both so you have to turn on and off
     if (weapon1 && !weapon2) LED_Toggle(0x01);
@@ -288,6 +299,39 @@ int main(void)
   }
 }
 
+//SysTick Sound Functions:
+void SysTick_Handler(void) {
+if (weapon1 && !weapon2) { // Weapon 1: Shooting sound
+        DAC5_OUT(shoot[index]);  
+        index++;
+        if (index > 4800) {
+            soundStop();
+        }
+    } 
+    else if (!weapon1 && weapon2) { // Weapon 2: Radial sound
+        DAC5_OUT(iceball[index]);  
+        index++;
+        if (index > 16987) {
+            soundStop();
+        }
+    }
+}
+
+void soundPlayShoot(void) {
+    index = 0;  // Reset index for new sound playback
+    SysTick->LOAD = 7256; // Set SysTick timer for playback rate
+    SysTick->CTRL = 7;  // Enable SysTick with interrupts
+}
+
+void soundPlayRadial(void) {
+    index = 0;  // Reset index for new sound playback
+    SysTick->LOAD = 7256; // Set SysTick timer for playback rate
+    SysTick->CTRL = 7;  // Enable SysTick with interrupts
+}
+
+void soundStop(void){
+  SysTick->LOAD = 0;
+}
 
 
 // use to sample adc and gyro readings at specified frequency
