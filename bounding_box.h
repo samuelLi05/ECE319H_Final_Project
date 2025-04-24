@@ -7,6 +7,8 @@ class bounding_box{
         uint32_t x, y, w, h;
     public:
         bool collision(bounding_box&); // reference so no need for copy constructor
+        bool collision_left(bounding_box&); // should onnly be one of the left or the right
+        bool collision_right(bounding_box&);
         uint32_t get_x();
         uint32_t get_y();
         uint32_t get_w();

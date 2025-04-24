@@ -14,16 +14,19 @@ class asteroids
 {
     private: 
         uint32_t x, y;
-        uint16_t sprite [899];
         int32_t vy;
         uint32_t h, w;
         uint32_t freq_counter;
     public: 
         bounding_box b1;
+        bool end;
+        bool user_collided;
+        bool proj_collided;
         void set_speed(int, bool, bool);
         void update_position();
         asteroids();
         asteroids(int);
+        ~asteroids();
 };
 
 

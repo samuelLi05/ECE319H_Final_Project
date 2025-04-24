@@ -10,7 +10,6 @@
 "./ST7735.o"
 "./SlidePot.o"
 "./SmallFont.o"
-"./Sound.o"
 "./Stars.o"
 "./Switch.o"
 "./TExaS.o"

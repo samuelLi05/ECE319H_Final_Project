@@ -18,7 +18,6 @@ C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/SPI.cpp \
 C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/ST7735.cpp \
 C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/SlidePot.cpp \
 ../SmallFont.cpp \
-../Sound.cpp \
 ../Stars.cpp \
 ../Switch.cpp \
 C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/TExaS.cpp \
@@ -45,7 +44,6 @@ OBJS += \
 ./ST7735.o \
 ./SlidePot.o \
 ./SmallFont.o \
-./Sound.o \
 ./Stars.o \
 ./Switch.o \
 ./TExaS.o \
@@ -69,7 +67,6 @@ CPP_DEPS += \
 ./ST7735.d \
 ./SlidePot.d \
 ./SmallFont.d \
-./Sound.d \
 ./Stars.d \
 ./Switch.d \
 ./TExaS.d \
@@ -93,7 +90,6 @@ OBJS__QUOTED += \
 "ST7735.o" \
 "SlidePot.o" \
 "SmallFont.o" \
-"Sound.o" \
 "Stars.o" \
 "Switch.o" \
 "TExaS.o" \
@@ -117,7 +113,6 @@ CPP_DEPS__QUOTED += \
 "ST7735.d" \
 "SlidePot.d" \
 "SmallFont.d" \
-"Sound.d" \
 "Stars.d" \
 "Switch.d" \
 "TExaS.d" \
@@ -141,7 +136,6 @@ CPP_SRCS__QUOTED += \
 "C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/ST7735.cpp" \
 "C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/SlidePot.cpp" \
 "../SmallFont.cpp" \
-"../Sound.cpp" \
 "../Stars.cpp" \
 "../Switch.cpp" \
 "C:/Users/samue/Documents/MSPM0_ValvanoWare/inc/TExaS.cpp" \

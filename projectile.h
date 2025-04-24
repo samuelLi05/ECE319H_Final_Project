@@ -21,6 +21,7 @@ class projectile{
     public:
         bounding_box b1;
         bool end;
+        bool collided;
         // update the velcoties and display the new sprite position. 
         void update_position();
         projectile();

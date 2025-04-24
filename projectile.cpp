@@ -4,6 +4,10 @@
 #include "bounding_box.h"
 #include "images/images.h"
 
+bool explosion = false;
+int32_t explosion_sequence = 0;
+int32_t explosion_x = 0;
+int32_t explosion_y = 0;
 
 void projectile::update_position()
 {
@@ -18,7 +22,7 @@ void projectile::update_position()
             start_x = start_x + (int)(counter * ((float)dx / (float)steps));
             start_y = start_y + (int)(counter * ((float)dy / (float)steps));
             counter++;
-            b1 = bounding_box(start_x - 1, start_y + 3, 4, 4);
+            b1 = bounding_box(start_x - 1, start_y + 3, 4, 4); // if there is a collision set bounding box to obscure value. draw black???
             ST7735_DrawBitmap(prev_x, prev_y, Black3x3, 3, 3);
             ST7735_DrawBitmap(start_x, start_y, sprite, 3, 3);
             prev_x = start_x;
@@ -51,6 +55,7 @@ projectile::projectile()
     user = true;
     end = false;
     b1 = bounding_box(start_x - 1, start_y + 3, 4, 4);
+    collided = false;
 }
 
 projectile::projectile(int s_x, int s_y, int e_x, int e_y, int v_y, bool select)
@@ -83,10 +88,16 @@ projectile::projectile(int s_x, int s_y, int e_x, int e_y, int v_y, bool select)
         }
     }
     b1 = bounding_box(start_x - 1, start_y + 3, 4, 4);
+    collided = false;
 }
 
 projectile::~projectile()
 {
     // nothing allocated on the heap. 
+    ST7735_DrawBitmap(start_x, start_y, Black3x3, 3, 3);
+    // set sequence for the explosion sequence. 5 big booms. 
+    explosion = true; // BOOM
+    explosion_x = start_x;
+    explosion_y = start_y; // set the explosion location 
 }
 

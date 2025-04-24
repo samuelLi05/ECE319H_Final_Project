@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <cstdint>
 #include <stdint.h>
 #include <ti/devices/msp/msp.h>
 #include "../inc/LaunchPad.h"
@@ -25,22 +26,31 @@ class Player{
         uint32_t cursor_position;
         uint32_t prev_cursor_position;
         int32_t aim_x, aim_y; // used for 
+        int8_t shoot_counter;
+        uint8_t update_score_counter;
         // define cursor sprite??
-        bool radial_happening;
         bool turbo1, turbo2, weapon1, weapon2;
+        bool prev_collided;
+
+        int32_t score_adder;
         
 
 
         public:
             bounding_box b1 [3]; // for collision detection later on 
             projectile* w1;
-            uint32_t score;
+            bool collided;
+            int32_t score;
+            bool radial_happening;
+            bool left_collided;
+            bool right_collided;
             void gyro_controls(int, int);
             void shoot();
             void radial();
             void draw_player();
             void update_cursor(int);
             void draw_cursor();
+            void boom();
             void recieveButton(bool, bool, bool, bool);
             int player_speed();
             Player();

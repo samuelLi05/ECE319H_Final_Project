@@ -20,6 +20,56 @@ bool bounding_box::collision(bounding_box& other)
 
 }
 
+bool bounding_box::collision_left(bounding_box& other)
+{
+    int left_x = x;
+    int right_x = x + w;
+    int top_y = y;
+    int bot_y = y + h;
+
+    int other_left_x = other.get_x();
+    int other_right_x = other_left_x + other.get_w();
+    int other_top_y = other.get_y();
+    int other_bot_y = other_top_y + other.get_h();
+
+    bool collision = !(right_x < other_left_x || 
+             left_x > other_right_x || 
+             bot_y < other_top_y || 
+             top_y > other_bot_y);
+
+    if (collision)
+    {
+        if (other_right_x > left_x && other_left_x < left_x) return true;
+    }
+
+    return false;
+}
+
+bool bounding_box::collision_right(bounding_box& other)
+{
+    int left_x = x;
+    int right_x = x + w;
+    int top_y = y;
+    int bot_y = y + h;
+
+    int other_left_x = other.get_x();
+    int other_right_x = other_left_x + other.get_w();
+    int other_top_y = other.get_y();
+    int other_bot_y = other_top_y + other.get_h();
+
+    bool collision = !(right_x < other_left_x || 
+             left_x > other_right_x || 
+             bot_y < other_top_y || 
+             top_y > other_bot_y);
+
+    if (collision)
+    {
+        if (other_left_x < right_x && other_right_x > right_x) return true;
+    }
+
+    return false;
+}
+
 bounding_box::bounding_box()
 {
     x = 0;

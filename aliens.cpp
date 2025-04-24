@@ -11,10 +11,11 @@ void aliens::set_speed(int gyro_y, bool turbo1, bool turbo2)
     else if (gyro_y <= 240 && gyro_y > 180) vy = -2;
     else if (gyro_y <= 180) vy= -3;
     else vy= -1; // setting the speeds here for the asteroids based on gyro input
+    
 
     if (turbo1 || turbo2) vy--;
-
-    y += vy;
+    if (freq_counter % 2 == 0) y += vy;
+    freq_counter++;
 }
 
 void aliens::update_position()

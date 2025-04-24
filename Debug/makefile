@@ -22,7 +22,6 @@ ORDERED_OBJS += \
 "./ST7735.o" \
 "./SlidePot.o" \
 "./SmallFont.o" \
-"./Sound.o" \
 "./Stars.o" \
 "./Switch.o" \
 "./TExaS.o" \
@@ -171,9 +170,9 @@ ECE319K_Lab9H.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)
-	-$(RM) "Clock.o" "DAC5.o" "EdgeTriggeredInt.o" "I2C.o" "LED.o" "Lab9HMain.o" "LaunchPad.o" "Player.o" "SPI.o" "ST7735.o" "SlidePot.o" "SmallFont.o" "Sound.o" "Stars.o" "Switch.o" "TExaS.o" "Timer.o" "aliens.o" "asteroids.o" "bounding_box.o" "enemy_spawner.o" "projectile.o" "images\pipedreams\PipeSound.o" "ticlang\startup_mspm0g3507_ticlang.o" 
+	-$(RM) "Clock.o" "DAC5.o" "EdgeTriggeredInt.o" "I2C.o" "LED.o" "Lab9HMain.o" "LaunchPad.o" "Player.o" "SPI.o" "ST7735.o" "SlidePot.o" "SmallFont.o" "Stars.o" "Switch.o" "TExaS.o" "Timer.o" "aliens.o" "asteroids.o" "bounding_box.o" "enemy_spawner.o" "projectile.o" "images\pipedreams\PipeSound.o" "ticlang\startup_mspm0g3507_ticlang.o" 
 	-$(RM) "images\pipedreams\PipeSound.d" "ticlang\startup_mspm0g3507_ticlang.d" 
-	-$(RM) "Clock.d" "DAC5.d" "EdgeTriggeredInt.d" "I2C.d" "LED.d" "Lab9HMain.d" "LaunchPad.d" "Player.d" "SPI.d" "ST7735.d" "SlidePot.d" "SmallFont.d" "Sound.d" "Stars.d" "Switch.d" "TExaS.d" "Timer.d" "aliens.d" "asteroids.d" "bounding_box.d" "enemy_spawner.d" "projectile.d" 
+	-$(RM) "Clock.d" "DAC5.d" "EdgeTriggeredInt.d" "I2C.d" "LED.d" "Lab9HMain.d" "LaunchPad.d" "Player.d" "SPI.d" "ST7735.d" "SlidePot.d" "SmallFont.d" "Stars.d" "Switch.d" "TExaS.d" "Timer.d" "aliens.d" "asteroids.d" "bounding_box.d" "enemy_spawner.d" "projectile.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 
